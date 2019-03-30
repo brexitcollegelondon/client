@@ -2,13 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import { BasicTable } from "./ChallengeTable";
-import { selectBar, selectFoo } from "../reduxStore/selectors";
-import { incrementCounter, decrementCounter } from "../foo/reducer";
-import { getBarData } from '../bar/reducer';
+import { selectUserId, selectUserInfo, selectChallenges } from "../reduxStore/selectors";
+import { setAllChallenges } from "../challenges/reducer";
+import { setUserInfo } from "../user_info/reducer";
+import { setUserId } from "../user_id/reducer";
 
-// TODO: rename this file
-function App({ foo: { counter }, bar: { data }, increment, decrement, getBarData }) {
-  getBarData();
+function App({ challenges: { challenges }, user_id: { user_id }, user_info: { user_info } }) {
   return (
     <BasicTable />
   );
@@ -16,23 +15,10 @@ function App({ foo: { counter }, bar: { data }, increment, decrement, getBarData
 
 function mapStateToProps(state) {
   return {
-    foo: selectFoo(state),
-    bar: selectBar(state),
+    challenges: selectChallenges(state),
+    user_id: selectUserId(state),
+    user_info: selectUserInfo(state),
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    increment() {
-      dispatch(incrementCounter())
-    },
-    decrement() {
-      dispatch(decrementCounter())
-    },
-    getBarData() {
-      dispatch(getBarData())
-    }
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

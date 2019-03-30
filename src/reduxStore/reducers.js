@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 
-import foo from '../foo/reducer';
-import bar from '../bar/reducer';
+import user_id from '../user_id/reducer';
+import user_info from '../user_info/reducer';
+import challenges from '../challenges/reducer';
 
 const reducers = {
-  foo,
-  bar,
+  user_id,
+  user_info,
+  challenges,
 };
 
 export default combineReducers(reducers);
