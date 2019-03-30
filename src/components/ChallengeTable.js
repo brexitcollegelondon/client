@@ -54,7 +54,7 @@ function ChallengeTable(props) {
 								<TableRow className={classes.row} key={challenge.challenge_id}>
 										<CustomTableCell>{challenge.challenge_type}</CustomTableCell>
 										<CustomTableCell>{challenge.target_quantity}</CustomTableCell>
-										<CustomTableCell>{challenge.challenge_duration}</CustomTableCell>
+										<CustomTableCell>{challenge.duration}</CustomTableCell>
 										<CustomTableCell>{challenge.start_time}</CustomTableCell>
 										<CustomTableCell>{challenge.pledge_amount}</CustomTableCell>
 										<CustomTableCell>{challenge.participants.length}</CustomTableCell>
