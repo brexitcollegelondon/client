@@ -15,6 +15,7 @@ function BAR_DATA_REQUEST(state) {
 const setBarData = createAction('BAR_DATA_SET');
 const requestBarData = createAction('BAR_DATA_REQUEST');
 
+// define action to be used in App
 export function getBarData() {
   return (dispatch, getState) => {
     if (selectBar(getState()).isRequested) return;
@@ -27,6 +28,7 @@ export function getBarData() {
   };
 }
 
+// handle the actual actions (just to make it FLUX standard
 export default handleActions({
   BAR_DATA_SET,
   BAR_DATA_REQUEST,
