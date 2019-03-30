@@ -1,8 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
 
 const initialState = {
-    user_id: "gerald",
-    current_amount: 97.0,
+    user_id: " ",
+    current_amount: 0,
 };
 
 const UPDATE_USER_INFO = (state, { payload }) => {

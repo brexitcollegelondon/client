@@ -13,7 +13,6 @@ import ChallengeTable from "./ChallengeTable";
 
 import { selectUserInfo, selectChallenges } from "../reduxStore/selectors";
 import { setAllChallenges } from "../challenges/reducer";
-import { setUserInfo } from "../user_info/reducer";
 import * as PropTypes from "prop-types";
 
 class App extends Component {
@@ -39,7 +38,21 @@ class App extends Component {
                     console.log(error);
                 });
         };
+        const joinSampleChallenge = () => {
+            axios.post('http://127.0.0.1:5000/join_challenge', {
+                challenge_id: "1",
+                user_id: "tiger",
+                is_bystander: false,
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        };
         postSampleChallenge();
+        joinSampleChallenge();
 
         this.getAllChallenges = this.getAllChallenges.bind(this);
 
