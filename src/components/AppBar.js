@@ -33,7 +33,7 @@ function DecentLifeAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h2" color="inherit" className={classes.grow}>
             Decent Life
           </Typography>
 					{loginStatus}

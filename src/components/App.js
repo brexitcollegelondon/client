@@ -1,7 +1,9 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
@@ -72,32 +74,36 @@ class App extends Component {
             return ongoing;
         };
         return (
-          <Fragment>
-          <Fragment>
+          <Grid container spacing={Number(8)}>
             <DecentLifeAppBar />
-          </Fragment>
-          <Fragment>
-          {/* Current Challenges Table  */}
-          <ChallengeTable challenges={getOngoingChallenges()} />
-
-          {/* Available Challenges Table  */}
-          <ChallengeTable challenges={challenges} />
-          </Fragment>
-          <Fragment>
-          {/* Create a new challenge */}
-          <ChallengeDialog />
-
-          {/* Display balance */}
-          <Paper elevation={1}>
-              <Typography variant="h5" component="h3">
-                Balance
-              </Typography>
-              <Typography component="p">
-                {user_info.current_amount} DCT
-              </Typography>
-            </Paper>
-          </Fragment>
-          </Fragment>
+            <Grid container justify="space-evenly" spacing={Number(24)}>
+              {/* Current Challenges Table  */}
+              <Grid item xs={12}>
+                <ChallengeTable challenges={getOngoingChallenges()} title='Your Challenges'/>
+              </Grid>
+              <Divider variant="middle" />
+              <Grid item xs={12}>
+                {/* Available Challenges Table  */}
+                <ChallengeTable challenges={challenges} title='All Challenges'/>
+              </Grid>
+              <Divider variant="middle" />
+              <Grid item xs={3}>
+                {/* Create a new challenge */}
+                <ChallengeDialog />
+              </Grid>
+              <Grid item xs={3}>
+                {/* Display balance */}
+                <Paper elevation={1}>
+                  <Typography variant="h5" component="h3">
+                    Balance
+                    <Typography component="">
+                    {user_info.current_amount} DCT
+                    </Typography>
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Grid>
         );
     }
 }

@@ -1,11 +1,14 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 const CustomTableCell = withStyles(theme => ({
@@ -39,34 +42,45 @@ const styles = theme => ({
   },
 });
 
+
 const challengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount', 'No. Participants'];
 
 function ChallengeTable(props) {
-  const { classes, challenges } = props;
+  const { classes, challenges, title } = props;
 
   return (
     <Paper className={classes.root}>
-      <Table className={classes.table} onRowClick={event => console.log(event)} >
-        <TableHead>
-          <TableRow>
-            {challengeHeaders.map(header => <CustomTableCell>{header}</CustomTableCell>)}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-				{
-						challenges.map(challenge => (
-								<TableRow className={classes.row} key={challenge.challenge_id}>
-										<CustomTableCell>{challenge.challenge_type}</CustomTableCell>
-										<CustomTableCell>{challenge.target_quantity}</CustomTableCell>
-										<CustomTableCell>{challenge.challenge_duration}</CustomTableCell>
-										<CustomTableCell>{challenge.start_time}</CustomTableCell>
-										<CustomTableCell>{challenge.pledge_amount}</CustomTableCell>
-										<CustomTableCell>{challenge.participants.length}</CustomTableCell>
-								</TableRow>
-						))
-				}
-        </TableBody>
-      </Table>
+      <Toolbar className={classNames(classes.root)}>
+        <div className={classes.title}>
+          <Typography variant="h3" id="tableTitle">
+            {title}
+          </Typography>
+        </div>
+       <div className={classes.spacer} />
+      </Toolbar>
+      <div className={classes.tableWrapper}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              {challengeHeaders.map(header => <CustomTableCell>{header}</CustomTableCell>)}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+  				{
+  						challenges.map(challenge => (
+  								<TableRow className={classes.row} key={challenge.challenge_id}>
+  										<CustomTableCell>{challenge.challenge_type}</CustomTableCell>
+  										<CustomTableCell>{challenge.target_quantity}</CustomTableCell>
+  										<CustomTableCell>{challenge.challenge_duration}</CustomTableCell>
+  										<CustomTableCell>{challenge.start_time}</CustomTableCell>
+  										<CustomTableCell>{challenge.pledge_amount}</CustomTableCell>
+  										<CustomTableCell>{challenge.participants.length}</CustomTableCell>
+  								</TableRow>
+  						))
+  				}
+          </TableBody>
+        </Table>
+      </div>
     </Paper>
   );
 }
