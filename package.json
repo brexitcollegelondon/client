@@ -1,11 +1,11 @@
 {
-  "name": "thought-machine-test",
+  "name": "decent-life",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
-    "material-ui-icons": "^1.0.0-beta.36",
-    "mdbreact": "^4.11.1",
+    "axios": "^0.18.0",
     "react": "^16.5.2",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.2",

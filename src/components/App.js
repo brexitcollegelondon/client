@@ -1,5 +1,6 @@
-import React, {Fragment} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -8,78 +9,111 @@ import DecentLifeAppBar from "./AppBar"
 import ChallengeDialog from "./ChallengeDialog"
 import ChallengeTable from "./ChallengeTable";
 
-import { selectUserId, selectUserInfo, selectChallenges } from "../reduxStore/selectors";
+import { selectUserInfo, selectChallenges } from "../reduxStore/selectors";
 import { setAllChallenges } from "../challenges/reducer";
 import { setUserInfo } from "../user_info/reducer";
-import { setUserId } from "../user_id/reducer";
+import * as PropTypes from "prop-types";
 
-function App({ challenges: { challenges }, user_id: { user_id }, user_info: { user_info } }) {
-  setUserId();
-  setUserInfo();
-  setAllChallenges();
+class App extends Component {
+    constructor(props) {
+        super(props);
+        const postSampleChallenge = () => {
+            axios.post('http://127.0.0.1:5000/challenge', {
+                challenge_id: "1",
+                creator_id: "gerald",
+                creator_bystander: false,
+                duration: 20,
+                start_time: "2019-03-31T00:05:32.000Z", // datetimestring
+                pledge_amount: 15, // in DCT
+                bystanders: [],
+                participants: [],
+                challenge_type: "STEPS",
+                target_quantity: 20, // 20 steps for this challenge
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        };
+        postSampleChallenge();
 
-  const getOngoingChallenges = () => {
-    let ongoing = [];
-    challenges.forEach(challenge => {
-      user_info.challenges.forEach(challenge_id => {
-          if (challenge_id === challenge.challenge_id) {
-            ongoing.push(challenge);
-          }
-      });
-    });
-    return ongoing;
-  };
+        this.getAllChallenges = this.getAllChallenges.bind(this);
 
-  return (
-    <Fragment>
-    <Fragment>
-      <DecentLifeAppBar />
-    </Fragment>
-    <Fragment>
-    {/* Current Challenges Table  */}
-    <ChallengeTable challenges={getOngoingChallenges()} />
+        this.getAllChallenges();
+    }
 
-    {/* Available Challenges Table  */}
-    <ChallengeTable challenges={challenges} />
-    </Fragment>
-    <Fragment>
-    {/* Create a new challenge */}
-    <ChallengeDialog />
+    getAllChallenges() {
+        const {dispatch} = this.props;
+        axios.get('http://127.0.0.1:5000/challenges')
+            .then(function (response) {
+                // list of challenge objects returned
+                const res = response.data;
+                dispatch(setAllChallenges(res));
+            })
+            .catch(function (error) {
+                // handle error
+                console.error(error);
+            });
+    }
 
-    {/* Display balance */}
-    <Paper elevation={1}>
-        <Typography variant="h5" component="h3">
-          Balance
-        </Typography>
-        <Typography component="p">
-          100
-        </Typography>
-      </Paper>
-    </Fragment>
-    </Fragment>
-  );
+    render() {
+        let {challenges, user_info} = this.props;
+        const ChallengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount', 'No. Participants'];
+        const getOngoingChallenges = () => {
+            let ongoing = [];
+            challenges.forEach(challenge => {
+                challenge.participants.forEach(participant => {
+                    if (participant === user_info.user_id) {
+                        ongoing.push(challenge);
+                    }
+                });
+            });
+            return ongoing;
+        };
+        return (
+          <Fragment>
+          <Fragment>
+            <DecentLifeAppBar />
+          </Fragment>
+          <Fragment>
+          {/* Current Challenges Table  */}
+          <ChallengeTable challenges={getOngoingChallenges()} />
+
+          {/* Available Challenges Table  */}
+          <ChallengeTable challenges={challenges} />
+          </Fragment>
+          <Fragment>
+          {/* Create a new challenge */}
+          <ChallengeDialog />
+
+          {/* Display balance */}
+          <Paper elevation={1}>
+              <Typography variant="h5" component="h3">
+                Balance
+              </Typography>
+              <Typography component="p">
+                {user_info.current_amount} DCT
+              </Typography>
+            </Paper>
+          </Fragment>
+          </Fragment>
+        );
+    }
 }
+
+App.propTypes = {
+    challenges: PropTypes.any,
+    user_info: PropTypes.any,
+    dispatch: PropTypes.any
+};
 
 function mapStateToProps(state) {
   return {
     challenges: selectChallenges(state),
-    user_id: selectUserId(state),
     user_info: selectUserInfo(state),
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    setUserId() {
-        dispatch(setUserId())
-    },
-    setUserInfo() {
-        dispatch(setUserInfo())
-    },
-    setAllChallenges() {
-        dispatch(setAllChallenges())
-    }
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
