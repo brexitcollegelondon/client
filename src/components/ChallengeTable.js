@@ -29,8 +29,12 @@ const styles = theme => ({
     minWidth: 700,
   },
   row: {
+    cursor: 'pointer',
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default,
+    },
+    '&:hover': {
+      backgroundColor: theme.palette.grey[200],
     },
   },
 });
@@ -42,7 +46,7 @@ function ChallengeTable(props) {
 
   return (
     <Paper className={classes.root}>
-      <Table className={classes.table}>
+      <Table className={classes.table} onRowClick={event => console.log(event)} >
         <TableHead>
           <TableRow>
             {challengeHeaders.map(header => <CustomTableCell>{header}</CustomTableCell>)}

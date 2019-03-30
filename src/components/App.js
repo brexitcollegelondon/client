@@ -60,7 +60,6 @@ class App extends Component {
 
     render() {
         let {challenges, user_info} = this.props;
-        const ChallengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount', 'No. Participants'];
         const getOngoingChallenges = () => {
             let ongoing = [];
             challenges.forEach(challenge => {
