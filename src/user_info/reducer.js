@@ -1,14 +1,12 @@
 import { createAction, handleActions } from 'redux-actions';
 
 const initialState = {
-    user_info: {
-        challenges: ["0","1"],
-        current_amount: 97.0,
-    },
+    user_id: "gerald",
+    current_amount: 97.0,
 };
 
 const UPDATE_USER_INFO = (state, { payload }) => {
-    return { ...state, user_info: payload };
+    return payload;
 };
 
 export const setUserInfo = createAction('UPDATE_USER_INFO');
