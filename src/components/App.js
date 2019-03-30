@@ -10,6 +10,21 @@ import { setUserInfo } from "../user_info/reducer";
 import { setUserId } from "../user_id/reducer";
 
 function App({ challenges: { challenges }, user_id: { user_id }, user_info: { user_info } }) {
+  setUserId();
+  setUserInfo();
+  setAllChallenges();
+  const ChallengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount', 'No. Participants'];
+  const getOngoingChallenges = () => {
+    let ongoing = [];
+    challenges.forEach(challenge => {
+      user_info.challenges.forEach(challenge_id => {
+          if (challenge_id === challenge.challenge_id) {
+            ongoing.push(challenge);
+          }
+      })
+    });
+    return ongoing;
+  };
   return (
     <MDBContainer>
         <MDBRow>
@@ -18,14 +33,14 @@ function App({ challenges: { challenges }, user_id: { user_id }, user_info: { us
         <MDBRow>
           <MDBCol>
            {/* Ongoing Challenges Table */}
-           <ChallengeTable headers={ChallengeHeaders} />
+           <ChallengeTable headers={ChallengeHeaders} challenges={getOngoingChallenges()}/>
           </MDBCol>
         </MDBRow>
         {/* TODO: Create some spacing */}
         <MDBRow>
           <MDBCol>
           {/* Available Challenges Table  */}
-          <ChallengeTable headers={ChallengeHeaders} />
+          <ChallengeTable headers={ChallengeHeaders} challenges={challenges}/>
           </MDBCol>
         </MDBRow>
         <MDBRow>
@@ -38,17 +53,13 @@ function App({ challenges: { challenges }, user_id: { user_id }, user_info: { us
           <MDBCol>
             {/* Display balance */}
             <MDBCard>
-              <MDBCardBody>Balance: {Balance} DCT</MDBCardBody>
+              <MDBCardBody>Balance: {user_info.current_amount} DCT</MDBCardBody>
             </MDBCard>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
   );
 }
-
-const ChallengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount'];
-
-const Balance = 100;
 
 function mapStateToProps(state) {
   return {
@@ -58,4 +69,18 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+  return {
+    setUserId() {
+        dispatch(setUserId())
+    },
+    setUserInfo() {
+        dispatch(setUserInfo())
+    },
+    setAllChallenges() {
+        dispatch(setAllChallenges())
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

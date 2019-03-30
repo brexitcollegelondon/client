@@ -3,7 +3,7 @@ import { createAction, handleActions } from 'redux-actions';
 const initialState = {
     user_info: {
         challenges: ["0","1"],
-        current_amount: 100.0,
+        current_amount: 97.0,
     },
 };
 

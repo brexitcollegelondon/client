@@ -10,21 +10,24 @@ export const ChallengeTable = props => {
         </tr>
       </MDBTableHead>
       <MDBTableBody>
-        <tr>
-          <td>Sleep</td>
-          <td>7 hours / Night</td>
-          <td>5 days</td>
-          <td>12:00</td>
-					<td>1000 </td>
-        </tr>
-				<tr>
-          <td>Steps</td>
-          <td>5</td>
-          <td>20 seconds</td>
-          <td>Now</td>
-					<td>50</td>
-        </tr>
+              {
+                  props.challenges.map(challenge =>
+                      <tr>
+                          <td>{challenge.challenge_type}</td>
+                          <td>{challenge.target_quantity}</td>
+                          <td>{challenge.challenge_duration}</td>
+                          <td>{challenge.start_time}</td>
+                          <td>{challenge.pledge_amount}</td>
+                          <td>{challenge.participants.length}</td>
+                      </tr>
+                  )
+              }
       </MDBTableBody>
     </MDBTable>
   );
-}
+};
+
+ChallengeTable.defaultProps = {
+    challenges: [],
+    headers: [],
+};
