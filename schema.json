@@ -1,0 +1,86 @@
+// Redux state object
+
+state = {
+	"user_id": "gerald",
+	"user_info": {
+		"challenges": ["0","1"],
+		"current_amount": 100.0,
+	},
+	"all_challenges": {
+		"challenges": [
+			{
+				"challenge_id": "1",
+				"participants": [
+					{
+						"user_id": "gerald",
+						"is_bystander": false,
+					},
+					{
+						"user_id": "tiger",
+						"is_bystander": false,
+					},
+				],
+				"challenge_type": "STEPS",
+				"challenge_duration": 30, // in seconds (for demo)
+				"start_time": "2019-03-31T00:05:32.000Z", // datetimestring
+				"pledge_amount": 15, // in DCT
+				"target_quantity": 20, // 20 steps for this challenge
+			},
+		],
+	}
+}
+
+// Communication Schema
+
+/* GET REQUESTS */
+
+// get_challenges(); RETURNS:
+"all_challenges": {
+		"challenges": [
+			{
+				"challenge_id": "1",
+				"participants": [
+					{
+						"user_id": "gerald",
+						"is_bystander": false,
+					},
+					{
+						"user_id": "tiger",
+						"is_bystander": false,
+					},
+				],
+				"challenge_type": "STEPS",
+				"challenge_duration": 30, // in seconds (for demo)
+				"start_time": "2019-03-31T00:05:32.000Z", // datetimestring
+				"pledge_amount": 15, // in DCT
+				"target_quantity": 20, // 20 steps for this challenge
+			},
+		],
+	}
+}
+
+// get_user_info(); RETURNS:
+"user_info": {
+	"challenges": ["0","1"],
+	"current_amount": 100.0,
+}
+
+/* POST REQUESTS */
+
+// create_challenge(challenge_created); RETURNS void
+"challenge_created": {
+	"challenge_id": "1",
+	"creator_id": "gerald", // user_id
+	"challenge_type": "STEP",
+	"challenge_duration": 30, // in seconds (for demo)
+	"start_time": "2019-03-31T00:05:32.000Z", // datetimestring
+	"pledge_amount": 15, // in DCT
+	"target_quantity": 20, // 20 steps for this challenge
+}
+
+// join_challenge(challenge_joined); RETURNS void
+"challenge_joined": {
+	"challenge_id": "1",
+	"user_id": "gerald",
+	"is_bystander": false,
+}
