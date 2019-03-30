@@ -1,33 +1,74 @@
 import React from 'react';
-import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-export const ChallengeTable = props => {
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: "primary",
+    color: theme.palette.common.black,
+		fontSize: 14,
+  },
+  body: {
+    fontSize: 10,
+  },
+}))(TableCell);
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
+  },
+  row: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+});
+
+const challengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount', 'No. Participants'];
+
+function ChallengeTable(props) {
+  const { classes, challenges } = props;
+
   return (
-    <MDBTable hover>
-      <MDBTableHead color="default-color" textWhite>
-        <tr>
-          {props.headers.map(header => <th>{header}</th>)}
-        </tr>
-      </MDBTableHead>
-      <MDBTableBody>
-              {
-                  props.challenges.map(challenge =>
-                      <tr>
-                          <td>{challenge.challenge_type}</td>
-                          <td>{challenge.target_quantity}</td>
-                          <td>{challenge.challenge_duration}</td>
-                          <td>{challenge.start_time}</td>
-                          <td>{challenge.pledge_amount}</td>
-                          <td>{challenge.participants.length}</td>
-                      </tr>
-                  )
-              }
-      </MDBTableBody>
-    </MDBTable>
+    <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            {challengeHeaders.map(header => <CustomTableCell>{header}</CustomTableCell>)}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+				{
+						challenges.map(challenge => (
+								<TableRow className={classes.row} key={challenge.challenge_id}>
+										<CustomTableCell>{challenge.challenge_type}</CustomTableCell>
+										<CustomTableCell>{challenge.target_quantity}</CustomTableCell>
+										<CustomTableCell>{challenge.challenge_duration}</CustomTableCell>
+										<CustomTableCell>{challenge.start_time}</CustomTableCell>
+										<CustomTableCell>{challenge.pledge_amount}</CustomTableCell>
+										<CustomTableCell>{challenge.participants.length}</CustomTableCell>
+								</TableRow>
+						))
+				}
+        </TableBody>
+      </Table>
+    </Paper>
   );
+}
+
+ChallengeTable.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
 
-ChallengeTable.defaultProps = {
-    challenges: [],
-    headers: [],
-};
+export default withStyles(styles)(ChallengeTable);

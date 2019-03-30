@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 
-import { ChallengeTable } from "./ChallengeTable";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBCard, MDBCardBody} from "mdbreact";
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
+import DecentLifeAppBar from "./AppBar"
+import ChallengeDialog from "./ChallengeDialog"
+import ChallengeTable from "./ChallengeTable";
 
 import { selectUserId, selectUserInfo, selectChallenges } from "../reduxStore/selectors";
 import { setAllChallenges } from "../challenges/reducer";
@@ -13,7 +17,7 @@ function App({ challenges: { challenges }, user_id: { user_id }, user_info: { us
   setUserId();
   setUserInfo();
   setAllChallenges();
-  const ChallengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount', 'No. Participants'];
+
   const getOngoingChallenges = () => {
     let ongoing = [];
     challenges.forEach(challenge => {
@@ -21,43 +25,38 @@ function App({ challenges: { challenges }, user_id: { user_id }, user_info: { us
           if (challenge_id === challenge.challenge_id) {
             ongoing.push(challenge);
           }
-      })
+      });
     });
     return ongoing;
   };
+
   return (
-    <MDBContainer>
-        <MDBRow>
-          {/* Decent Life Banner */}
-        </MDBRow>
-        <MDBRow>
-          <MDBCol>
-           {/* Ongoing Challenges Table */}
-           <ChallengeTable headers={ChallengeHeaders} challenges={getOngoingChallenges()}/>
-          </MDBCol>
-        </MDBRow>
-        {/* TODO: Create some spacing */}
-        <MDBRow>
-          <MDBCol>
-          {/* Available Challenges Table  */}
-          <ChallengeTable headers={ChallengeHeaders} challenges={challenges}/>
-          </MDBCol>
-        </MDBRow>
-        <MDBRow>
-          <MDBCol>
-          {/* Create a new challenge */}
-            <MDBBtn color="default" rounded floating>
-              Create Challenge
-            </MDBBtn>
-          </MDBCol>
-          <MDBCol>
-            {/* Display balance */}
-            <MDBCard>
-              <MDBCardBody>Balance: {user_info.current_amount} DCT</MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+    <Fragment>
+    <Fragment>
+      <DecentLifeAppBar />
+    </Fragment>
+    <Fragment>
+    {/* Current Challenges Table  */}
+    <ChallengeTable challenges={getOngoingChallenges()} />
+
+    {/* Available Challenges Table  */}
+    <ChallengeTable challenges={challenges} />
+    </Fragment>
+    <Fragment>
+    {/* Create a new challenge */}
+    <ChallengeDialog />
+
+    {/* Display balance */}
+    <Paper elevation={1}>
+        <Typography variant="h5" component="h3">
+          Balance
+        </Typography>
+        <Typography component="p">
+          100
+        </Typography>
+      </Paper>
+    </Fragment>
+    </Fragment>
   );
 }
 
