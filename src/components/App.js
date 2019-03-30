@@ -1,7 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import { BasicTable } from "./ChallengeTable";
+import { ChallengeTable } from "./ChallengeTable";
+import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
+
 import { selectBar, selectFoo } from "../reduxStore/selectors";
 import { incrementCounter, decrementCounter } from "../foo/reducer";
 import { getBarData } from '../bar/reducer';
@@ -10,9 +12,30 @@ import { getBarData } from '../bar/reducer';
 function App({ foo: { counter }, bar: { data }, increment, decrement, getBarData }) {
   getBarData();
   return (
-    <BasicTable />
+    <MDBContainer>
+        <MDBRow>
+          {/* Decent Life Banner */}
+        </MDBRow>
+        <MDBRow>
+          <MDBCol>
+           {/* Ongoing Challenges Table */}
+           <ChallengeTable headers={OngoingChallengeHeaders} />
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
+          <MDBCol>
+          {/* Available Challenges Table  */}
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
+        {/* Create some spacing */}
+        </MDBRow>
+
+      </MDBContainer>
   );
 }
+
+const OngoingChallengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time']
 
 function mapStateToProps(state) {
   return {
