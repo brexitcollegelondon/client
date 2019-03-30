@@ -4,13 +4,12 @@ import {connect} from 'react-redux';
 import { ChallengeTable } from "./ChallengeTable";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBCard, MDBCardBody} from "mdbreact";
 
-import { selectBar, selectFoo } from "../reduxStore/selectors";
-import { incrementCounter, decrementCounter } from "../foo/reducer";
-import { getBarData } from '../bar/reducer';
+import { selectUserId, selectUserInfo, selectChallenges } from "../reduxStore/selectors";
+import { setAllChallenges } from "../challenges/reducer";
+import { setUserInfo } from "../user_info/reducer";
+import { setUserId } from "../user_id/reducer";
 
-// TODO: rename this file
-function App({ foo: { counter }, bar: { data }, increment, decrement, getBarData }) {
-  getBarData();
+function App({ challenges: { challenges }, user_id: { user_id }, user_info: { user_info } }) {
   return (
     <MDBContainer>
         <MDBRow>
@@ -47,29 +46,16 @@ function App({ foo: { counter }, bar: { data }, increment, decrement, getBarData
   );
 }
 
-const ChallengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount']
+const ChallengeHeaders = ['Challenge Type', 'Quantity', 'Duration', 'Start Time', 'Pledge Amount'];
 
-const Balance = 100
+const Balance = 100;
 
 function mapStateToProps(state) {
   return {
-    foo: selectFoo(state),
-    bar: selectBar(state),
+    challenges: selectChallenges(state),
+    user_id: selectUserId(state),
+    user_info: selectUserInfo(state),
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    increment() {
-      dispatch(incrementCounter())
-    },
-    decrement() {
-      dispatch(decrementCounter())
-    },
-    getBarData() {
-      dispatch(getBarData())
-    }
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
