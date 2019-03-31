@@ -5,16 +5,31 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Button from "@material-ui/core/Button/Button";
+import Fab from "@material-ui/core/Fab";
+import InputAdornment from '@material-ui/core/InputAdornment';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+
 import { setUserInfo } from "../user_info/reducer";
 import { selectChallenges, selectUserInfo } from "../reduxStore/selectors";
 
 const styles = theme => ({
+  cssFocused: {},
+  cssLabel: {
+    '&$cssFocused': {
+      color: "black",
+      fontSize: 16
+    },
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   textField: {
+    '&$cssFocused': {
+      color: "black",
+      fontSize: 16
+    },
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     marginTop: theme.spacing.unit,
@@ -71,17 +86,31 @@ class LoginTextField extends React.Component {
         <form className={classes.container} noValidate autoComplete="off">
           <div>
           <TextField
-            id="outlined-login"
-            label="Login"
-            className={classes.textField}
-            value={this.state.login}
-            onChange={this.handleChange('login')}
-            margin="normal"
-            variant="outlined"
+          className={classes.textField}
+          value={this.state.login}
+          id="input-with-icon-textfield"
+          label="Login"
+          onChange={this.handleChange('login')}
+          InputLabelProps={{
+            /* Css to make label text darker on focus */
+            classes: {
+              root: classes.cssLabel,
+              focused: classes.cssFocused
+            },
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Fab size='medium' color="secondary" variant="fab" aria-label="login" type='button' onClick={this.handleSubmit}>
+                  <AccountCircle />
+                </Fab>
+              </InputAdornment>
+            ),
+            classes: {
+              focused: classes.cssFocused
+            },
+          }}
           />
-            <Button size='large' color="primary" variant="fab" aria-label="create" type='button' onClick={this.handleSubmit}>
-                Login
-            </Button>
           </div>
         </form>
     );
