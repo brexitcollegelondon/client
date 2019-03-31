@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 
 const initialState = {
     user_id: " ",
-    current_amount: 0,
+    current_balance: 0,
 };
 
 const UPDATE_USER_INFO = (state, { payload }) => {

@@ -75,7 +75,7 @@ class LoginTextField extends React.Component {
         .catch(function (error) {
             // handle error
             console.error(error);
-            dispatch(setUserInfo({ user_id: '', current_amount: 0 }));
+            dispatch(setUserInfo({ user_id: '', current_balance: 0 }));
         });
     return false;
   };
