@@ -1,8 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-
-
+import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -14,8 +13,10 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 
-import { selectCreate } from '../reduxStore/selectors';
+import { selectCreate, selectUserInfo } from '../reduxStore/selectors';
 import CreateChallengeForm from './CreateChallengeForm'
+import {setAllChallenges} from "../challenges/reducer";
+import * as PropTypes from "prop-types";
 
 const DialogTitle = withStyles(theme => ({
   root: {
@@ -71,9 +72,42 @@ class ChallengeDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  getAllChallenges = () => {
+      const {dispatch} = this.props;
+      axios.get('http://127.0.0.1:5000/challenges')
+          .then(function (response) {
+              // list of challenge objects returned
+              const res = response.data;
+              dispatch(setAllChallenges(res));
+          })
+          .catch(function (error) {
+              // handle error
+              console.error(error);
+          });
+  };
+
   handleCreate = () => {
-    const { create } = this.props;
-    console.log(create);
+    const { create, user_info } = this.props;
+    // HARD CODE CHALLENGE:
+    axios.post('http://127.0.0.1:5000/challenge', {
+        challenge_id: "1",
+        creator_id: user_info.user_id,
+        creator_bystander: false,
+        duration: 20,
+        start_time: "2019-03-31T00:05:32.000Z", // datetimestring
+        pledge_amount: 15, // in DCT
+        bystanders: [],
+        participants: [user_info.user_id],
+        challenge_type: create.challenge_type,
+        target_quantity: 20, // 20 steps for this challenge
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .then(this.getAllChallenges);
     this.setState({ open: false });
   };
 
@@ -116,9 +150,15 @@ class ChallengeDialog extends React.Component {
   }
 }
 
+ChallengeDialog.propTypes = {
+    create: PropTypes.any,
+    user_info: PropTypes.any,
+};
+
 function mapStateToProps(state) {
 	return {
 		create: selectCreate(state),
+        user_info: selectUserInfo(state),
 	};
 }
 

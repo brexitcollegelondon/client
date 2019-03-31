@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import DecentLifeAppBar from "./AppBar"
 import ChallengeDialog from "./ChallengeDialog"
 import ChallengeTable from "./ChallengeTable";
+import MyChallengeTable from "./MyChallengeTable";
 
 import { selectUserInfo, selectChallenges } from "../reduxStore/selectors";
 import { setAllChallenges } from "../challenges/reducer";
@@ -18,27 +19,7 @@ import * as PropTypes from "prop-types";
 class App extends Component {
     constructor(props) {
         super(props);
-        const postSampleChallenge = () => {
-            axios.post('http://127.0.0.1:5000/challenge', {
-                challenge_id: "1",
-                creator_id: "gerald",
-                creator_bystander: false,
-                duration: 20,
-                start_time: "2019-03-31T00:05:32.000Z", // datetimestring
-                pledge_amount: 15, // in DCT
-                bystanders: [],
-                participants: [],
-                challenge_type: "STEPS",
-                target_quantity: 20, // 20 steps for this challenge
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        };
-        postSampleChallenge();
+
         this.getAllChallenges = this.getAllChallenges.bind(this);
 
         this.getAllChallenges();
@@ -77,7 +58,7 @@ class App extends Component {
             <Grid container justify="space-evenly" spacing={Number(24)}>
               {/* Current Challenges Table  */}
               <Grid item xs={12}>
-                <ChallengeTable challenges={getOngoingChallenges()} title='Your Challenges'/>
+                <MyChallengeTable challenges={getOngoingChallenges()} title='Your Challenges'/>
               </Grid>
               <Divider variant="middle" />
               <Grid item xs={12}>
