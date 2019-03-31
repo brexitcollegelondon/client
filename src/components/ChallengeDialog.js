@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -32,7 +31,7 @@ export default class ChallengeDialog extends React.Component {
 
   render() {
     return (
-      <Grid container>
+      <Grid container spacing={16}>
 			  <Button color="primary" variant="contained" aria-label="create" size='large'onClick={this.handleClickOpen}>
           <AddIcon />
           <Typography color='inherit' variant="h5" component="h3">
@@ -40,18 +39,25 @@ export default class ChallengeDialog extends React.Component {
           </Typography>
 	      </Button>
         <Dialog
-          fullWidth={true}
-          maxWidth='lg'
+          maxWidth='md'
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Create a new challenge</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+          <Grid container alignItems='center' spacing={16}>
+            <Grid item xs={12}>
+              <DialogTitle id="form-dialog-title">Create a new challenge</DialogTitle>
+            </Grid>
+            <Grid item xs={12}>
+              <DialogContentText>
               Create a new challenge to try and gain your friend's Decent!
-            </DialogContentText>
-            <CreateChallengeForm />
+              </DialogContentText>
+            </Grid>
+            <Grid item xs={12}>
+              <CreateChallengeForm />
+            </Grid>
+          </Grid>
+          <DialogContent>
           </DialogContent>
           <DialogActions>
             <Button size='large' onClick={this.handleClose} color="primary">
