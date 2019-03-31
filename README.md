@@ -1,7 +1,14 @@
-# Maurice Yap React Frontend App Bootstrap
+# Hack Kosice Team 2019
+## Maurice Yap, Tiger Cross, Gerald Low, Jonas Scholz
 
-Based on create-react-app, with the following on top:
-- Redux
-  - Redux Thunk
-  - Redux Actions
-- Bootstrap CSS
+An elegant material design web application in React built on top of Redux.
+
+Requirements: yarn
+
+run '''yarn install'''
+
+run '''main.py''' in decentlife-server repository to initialise backend server
+
+connect with the backend repo by performing the following commands:
+
+''' '''
