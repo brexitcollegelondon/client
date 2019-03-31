@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
@@ -9,6 +10,10 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
+import * as PropTypes from "prop-types";
+
+import { selectCreate } from '../reduxStore/selectors';
+import {setChallengeType, setTargetQuantity, setDuration, setStartTime, setPledgeAmount} from '../create/reducer'
 
 const styles = theme => ({
 	root: {
@@ -33,15 +38,14 @@ const styles = theme => ({
 });
 
 class ChallengeTypes extends React.Component {
-  state = {
-    selectedValue: 'steps',
-  };
-
   handleChange = event => {
-    this.setState({ selectedValue: event.target.value });
+		const { dispatch } = this.props;
+		console.log(event.target.value);
+    dispatch(setChallengeType(event.target.value))
   };
 
   render() {
+		const { create } = this.props;
     return (
       <div>
 			  <FormControl component="fieldset" >
@@ -50,7 +54,7 @@ class ChallengeTypes extends React.Component {
 						row
 						aria-label="Types"
 						name="type"
-						value={this.state.value}
+						value={create.challenge_type}
 						onChange={this.handleChange}
 					  >
 							<FormControlLabel value="steps" control={<Radio />} label="Steps" />
@@ -63,31 +67,58 @@ class ChallengeTypes extends React.Component {
   }
 }
 
-const ChallengeSelection = withStyles(styles)(ChallengeTypes)
+function mapStateToProps(state) {
+	return {
+		create: selectCreate(state),
+	};
+}
+
+ChallengeTypes.propTypes = {
+	dispatch: PropTypes.any,
+	create: PropTypes.any
+}
+
+const ChallengeSelection = withStyles(styles)(connect(mapStateToProps)(ChallengeTypes))
 
 class InputQuantity extends React.Component {
-	state = {
-    amount: '',
-	}
 
-	handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
+	handleChange = event => {
+		const { dispatch, type } = this.props;
+		console.log(event.target.value);
+		if (type === 'pledge') {
+			dispatch(setPledgeAmount(event.target.value))
+		} else if (type === 'quantity') {
+			dispatch(setTargetQuantity(event.target.value))
+		} else if (type === 'duration') {
+			dispatch(setDuration(event.target.value))
+		} else {
+			dispatch(setStartTime(event.target.value))
+		}
   };
 
 	render() {
-		const { classes, pledge } = this.props;
-
+		const { classes, type, label, create } = this.props;
+		let value;
+		if (type === 'pledge') {
+			value = create.pledge_amount;
+		} else if (type === 'quantity') {
+			value = create.target_quantity;
+		} else if (type === 'duration') {
+			value = create.duration;
+		} else {
+			value = create.start_time;
+		}
 	  return (
 			<div className={classes.root}>
 				<TextField
 		          id="filled-adornment-amount"
 		          className={classNames(classes.margin, classes.textField)}
 		          variant="filled"
-		          label={pledge ? "Pledge Amount" : "Quantity"}
-		          value={this.state.amount}
-		          onChange={this.handleChange('amount')}
+		          label={label}
+		          value={value}
+		          onChange={this.handleChange}
 		          InputProps={{
-		            endAdornment: <InputAdornment position="end">{pledge ? "DCT" : ""}</InputAdornment>,
+		            endAdornment: <InputAdornment position="end">{type === 'pledge' ? "DCT" : ""}</InputAdornment>,
 		          }}
 		        />
 			</div>
@@ -95,31 +126,13 @@ class InputQuantity extends React.Component {
 	}
 }
 
-const QuantityPicker = withStyles(styles)(InputQuantity)
-
-function TimePicker(props) {
-  const { classes, type, label, defaultValue } = props;
-
-  return (
-    <form className={classes.container} noValidate>
-      <TextField
-			  id={type}
-        label={label}
-        type={type}
-        defaultValue={defaultValue}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-      />
-    </form>
-  );
+InputQuantity.propTypes = {
+	classes: PropTypes.object.isRequired,
+	dispatch: PropTypes.any,
+	create: PropTypes.any
 }
 
-const DurationPicker = withStyles(styles)(TimePicker)
+const QuantityPicker = withStyles(styles)(connect(mapStateToProps)(InputQuantity))
 
 export default class CreateChallengeForm extends React.Component {
 	render() {
@@ -129,16 +142,16 @@ export default class CreateChallengeForm extends React.Component {
 			    <ChallengeSelection />
 				</Grid>
 				<Grid item xs={12}>
-			    <QuantityPicker pledge={false}/>
+			    <QuantityPicker type='quantity' label='Quantity'/>
 				</Grid>
 				<Grid item xs={12}>
-			    <DurationPicker type='time' label='Duration' defaultValue='00:00'/>
+			    <QuantityPicker type='duration' label='Duration'/>
 				</Grid>
 				<Grid item xs={12}>
-			    <DurationPicker type='date' label='Start Date' defaultValue='Now'/>
+			    <QuantityPicker type='start_time' label='Start Time'/>
 				</Grid>
 				<Grid item xs={12}>
-			    <QuantityPicker pledge={true}/>
+			    <QuantityPicker type='pledge' label='Pledge Amount'/>
 				</Grid>
 			</Grid>
 		);

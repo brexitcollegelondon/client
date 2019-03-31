@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,9 +11,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 
+import { selectCreate } from '../reduxStore/selectors';
 import CreateChallengeForm from './CreateChallengeForm'
 
-export default class ChallengeDialog extends React.Component {
+class ChallengeDialog extends React.Component {
   state = {
     open: false,
   };
@@ -25,13 +28,14 @@ export default class ChallengeDialog extends React.Component {
   };
 
   handleCreate = () => {
+    const { create } = this.props;
+    console.log(create);
     this.setState({ open: false });
-    // Do some more here to post data off.
   };
 
   render() {
     return (
-      <Grid container spacing={16}>
+      <Grid container spacing={24}>
 			  <Button color="primary" variant="contained" aria-label="create" size='large'onClick={this.handleClickOpen}>
           <AddIcon />
           <Typography color='inherit' variant="h5" component="h3">
@@ -39,7 +43,7 @@ export default class ChallengeDialog extends React.Component {
           </Typography>
 	      </Button>
         <Dialog
-          maxWidth='md'
+          maxWidth='xs'
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
@@ -72,3 +76,11 @@ export default class ChallengeDialog extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+	return {
+		create: selectCreate(state),
+	};
+}
+
+export default connect(mapStateToProps)(ChallengeDialog)
