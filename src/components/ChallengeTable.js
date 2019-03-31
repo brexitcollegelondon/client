@@ -93,8 +93,8 @@ class ChallengeTable extends React.Component {
         })
         .catch(function (error) {
             console.log(error);
-        });
-    this.getAllChallenges();
+        })
+        .then(this.getAllChallenges);
     this.setState({ open: false });
   };
   render() {
