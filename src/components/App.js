@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import DecentLifeAppBar from "./AppBar"
 import ChallengeDialog from "./ChallengeDialog"
 import ChallengeTable from "./ChallengeTable";
+import MyChallengeTable from "./MyChallengeTable";
 
 import { selectUserInfo, selectChallenges } from "../reduxStore/selectors";
 import { setAllChallenges } from "../challenges/reducer";
@@ -57,7 +58,7 @@ class App extends Component {
             <Grid container justify="space-evenly" spacing={Number(24)}>
               {/* Current Challenges Table  */}
               <Grid item xs={12}>
-                <ChallengeTable challenges={getOngoingChallenges()} title='Your Challenges'/>
+                <MyChallengeTable challenges={getOngoingChallenges()} title='Your Challenges'/>
               </Grid>
               <Divider variant="middle" />
               <Grid item xs={12}>
