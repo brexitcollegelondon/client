@@ -18,27 +18,7 @@ import * as PropTypes from "prop-types";
 class App extends Component {
     constructor(props) {
         super(props);
-        const postSampleChallenge = () => {
-            axios.post('http://127.0.0.1:5000/challenge', {
-                challenge_id: "1",
-                creator_id: "gerald",
-                creator_bystander: false,
-                duration: 20,
-                start_time: "2019-03-31T00:05:32.000Z", // datetimestring
-                pledge_amount: 15, // in DCT
-                bystanders: [],
-                participants: [],
-                challenge_type: "STEPS",
-                target_quantity: 20, // 20 steps for this challenge
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        };
-        postSampleChallenge();
+
         this.getAllChallenges = this.getAllChallenges.bind(this);
 
         this.getAllChallenges();
