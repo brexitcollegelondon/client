@@ -3,9 +3,9 @@ import { createAction, handleActions } from 'redux-actions';
 const initialState = {
     challenge_type: "",
 		target_quantity: "",
-		duration: 0,
+		duration: "",
 		start_time: "",
-		pledge_amount: 0
+		pledge_amount: ""
 };
 
 const SET_CHALLENGE_TYPE = (state, { payload }) => {

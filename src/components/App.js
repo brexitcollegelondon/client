@@ -93,10 +93,7 @@ class App extends Component {
                 {/* Display balance */}
                 <Paper elevation={1}>
                   <Typography variant="h5" component="h3">
-                    Balance
-                    <Typography component="">
-                    {user_info.current_amount} DCT
-                    </Typography>
+                    Balance:  {user_info.current_amount} DCT
                   </Typography>
                 </Paper>
               </Grid>

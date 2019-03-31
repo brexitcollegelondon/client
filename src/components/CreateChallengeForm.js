@@ -19,19 +19,13 @@ const styles = theme => ({
 	root: {
     display: 'flex',
   },
-  formControl: {
-    margin: theme.spacing.unit * 3,
-  },
-  group: {
-    margin: `${theme.spacing.unit}px 0`,
-  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: 'auto',
+    marginRight: 'auto',
     width: 200,
 		flexBasis: 200,
   },
@@ -46,9 +40,13 @@ class ChallengeTypes extends React.Component {
 
   render() {
 		const { create } = this.props;
+		const divStyle = {
+   		paddingLeft: "5em",
+			paddingRight: "5em",
+			};
     return (
-      <div>
-			  <FormControl component="fieldset" >
+      <div style={divStyle} >
+			  <FormControl component="container" >
 				  <FormLabel component="legend">Challenge Type</FormLabel>
 					  <RadioGroup
 						row
@@ -114,6 +112,7 @@ class InputQuantity extends React.Component {
 		          id="filled-adornment-amount"
 		          className={classNames(classes.margin, classes.textField)}
 		          variant="filled"
+							defaultValue={0}
 		          label={label}
 		          value={value}
 		          onChange={this.handleChange}
