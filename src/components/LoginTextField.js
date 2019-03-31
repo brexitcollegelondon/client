@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Fab from "@material-ui/core/Fab";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import PINK from '@material-ui/core/colors/pink';
 
 
 import { logIn, setUserInfo } from "../user_info/reducer";
@@ -18,8 +19,9 @@ const styles = theme => ({
   cssFocused: {},
   cssLabel: {
     fontSize: 16,
+    color: "white",
     '&$cssFocused': {
-      color: "black",
+      color: "#d1d1d1",
       fontSize: 16
     },
   },
@@ -28,8 +30,9 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   textField: {
+    color: "white",
     '&$cssFocused': {
-      color: "black",
+      color: "white",
       fontSize: 16
     },
     marginLeft: theme.spacing.unit,
@@ -40,11 +43,12 @@ const styles = theme => ({
     marginTop: 16,
   },
   button: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing.unit * 10,
     marginRight: theme.spacing.unit,
     position: 'relative',
     top: theme.spacing.unit * 10,
     display: 'inline-block',
+    backgroundColor: PINK["800"]
   },
   menu: {
     width: 200,

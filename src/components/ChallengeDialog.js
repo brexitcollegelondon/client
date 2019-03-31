@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
+import GREEN from '@material-ui/core/colors/green';
 
 import { selectCreate, selectUserInfo } from '../reduxStore/selectors';
 import CreateChallengeForm from './CreateChallengeForm'
@@ -115,7 +116,7 @@ class ChallengeDialog extends React.Component {
   render() {
     return (
       <Grid container spacing={24}>
-			  <Button color="primary" variant="contained" aria-label="create" size='large'onClick={this.handleClickOpen}>
+			  <Button style={{ backgroundColor: GREEN["500"], color: "white"}} variant="contained" aria-label="create" size='large'onClick={this.handleClickOpen}>
           <AddIcon />
           <Typography color='inherit' variant="h5" component="h3">
             Create Challenge

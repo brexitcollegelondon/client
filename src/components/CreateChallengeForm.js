@@ -144,7 +144,7 @@ export default class CreateChallengeForm extends React.Component {
 	render() {
 		return (
 			<Fragment>
-				<Grid container spacing={12}>
+				<Grid container spacing={12} style={{margin: '3rem auto'}}>
           <Grid item xs={12}>
             <ChallengeSelection style={{width: "100%"}} />
           </Grid>

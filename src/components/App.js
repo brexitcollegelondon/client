@@ -56,7 +56,7 @@ class App extends Component {
         return (
           <Grid container spacing={Number(8)}>
             <DecentLifeAppBar />
-            <Grid container justify="space-evenly" spacing={Number(24)}>
+            <Grid container justify="space-evenly" spacing={Number(24)} style={{margin: '0 6rem'}}>
               {/* Current Challenges Table  */}
               <Grid item xs={12}>
                 <MyChallengeTable challenges={getOngoingChallenges()} title='Your Challenges'/>
@@ -73,7 +73,7 @@ class App extends Component {
               </Grid>
               <Grid item xs={3}>
                 {/* Display balance */}
-                <Paper elevation={1}>
+                <Paper elevation={1} style={{padding: "1.5rem"}} marginTop='6rem'>
                   <Typography variant="h5" component="h3">
                     Balance:  {user_info.current_balance} DCT
                   </Typography>

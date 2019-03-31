@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import GREEN from '@material-ui/core/colors/green';
 
 import LoginTextField from './LoginTextField'
 import { selectUserInfo } from "../reduxStore/selectors";
@@ -26,7 +27,7 @@ function DecentLifeAppBar(props) {
   const { classes, isLoggedIn, userId } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static" style={{ paddingTop: '0.8rem', paddingBottom: '0.8rem' }}>
+      <AppBar position="static" style={{ padding: '0.8rem 2rem', backgroundColor: GREEN["500"] }}>
         <Toolbar>
           <Typography variant="h2" color="inherit" className={classes.grow}>
             Decent Life
