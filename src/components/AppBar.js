@@ -6,6 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import LoginTextField from './LoginTextField'
+import { selectUserInfo } from "../reduxStore/selectors";
+import { connect } from "react-redux";
 
 const styles = {
   root: {
@@ -21,7 +23,7 @@ const styles = {
 };
 
 function DecentLifeAppBar(props) {
-  const { classes } = props;
+  const { classes, isLoggedIn, userId } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ paddingTop: '0.8rem', paddingBottom: '0.8rem' }}>
@@ -29,7 +31,7 @@ function DecentLifeAppBar(props) {
           <Typography variant="h2" color="inherit" className={classes.grow}>
             Decent Life
           </Typography>
-          <LoginTextField/>
+          {isLoggedIn ? <span style={{fontSize: '1.8rem'}}>Hello {userId.charAt(0).toUpperCase()}{userId.slice(1)}!</span> : <LoginTextField/>}
         </Toolbar>
       </AppBar>
     </div>
@@ -38,6 +40,12 @@ function DecentLifeAppBar(props) {
 
 DecentLifeAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(DecentLifeAppBar);
+function mapStateToProps(state) {
+  return {isLoggedIn: selectUserInfo(state).is_logged_in, userId: selectUserInfo(state).user_id};
+}
+
+export default withStyles(styles)(connect(mapStateToProps)(DecentLifeAppBar));

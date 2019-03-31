@@ -23,7 +23,7 @@ const DialogTitle = withStyles(theme => ({
   root: {
     borderBottom: `1px solid ${theme.palette.divider}`,
     margin: 0,
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 2
   },
   closeButton: {
     position: 'absolute',
@@ -122,14 +122,16 @@ class ChallengeDialog extends React.Component {
           </Typography>
 	      </Button>
         <Dialog
-          maxWidth='xs'
+          maxWidth='md'
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
           <Grid container alignItems='center' spacing={16}>
             <Grid item xs={12}>
-              <DialogTitle id="form-dialog-title">Create a new challenge</DialogTitle>
+              <DialogTitle id="form-dialog-title">
+                <h2 style={{textAlign: 'center'}}>Create a new challenge</h2>
+              </DialogTitle>
             </Grid>
             <Grid item xs={12}>
               <CreateChallengeForm />
@@ -139,10 +141,10 @@ class ChallengeDialog extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button size='large' onClick={this.handleClose} color="primary">
-              Cancel
+              <span style={{fontSize: "1.4rem"}}>Cancel</span>
             </Button>
             <Button size='large' onClick={this.handleCreate} color="primary">
-              Create
+              <span style={{fontSize: "1.4rem"}}>Create</span>
             </Button>
           </DialogActions>
         </Dialog>

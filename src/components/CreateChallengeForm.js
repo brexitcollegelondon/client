@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -42,22 +42,25 @@ class ChallengeTypes extends React.Component {
 		const { create } = this.props;
 		const divStyle = {
    		paddingLeft: "5em",
-			paddingRight: "5em",
+			paddingRight: "5em"
 			};
     return (
       <div style={divStyle} >
-			  <FormControl component="container" >
-				  <FormLabel component="legend">Challenge Type</FormLabel>
+			  <FormControl component="container" style={{width: "100%", textAlign: "center"}}>
+				  <FormLabel component="legend" style={{paddingTop: '2rem', paddingBottom: '0.4rem', marginBottom: 0}}>
+						<span style={{ fontSize: '2rem'}}>Challenge Type</span>
+					</FormLabel>
 					  <RadioGroup
 						row
 						aria-label="Types"
 						name="type"
 						value={create.challenge_type}
 						onChange={this.handleChange}
+						style={{margin: '0 auto 2rem'}}
 					  >
-							<FormControlLabel value="steps" control={<Radio />} label="Steps" />
-							<FormControlLabel value="sleep" control={<Radio />} label="Sleep" />
-							<FormControlLabel value="exercise" control={<Radio />} label="Exercise" />
+							<FormControlLabel value="steps" control={<Radio />} label={<span style={{fontSize: '1.7rem'}}>Steps</span>}/>
+							<FormControlLabel value="sleep" control={<Radio />} label={<span style={{fontSize: '1.7rem'}}>Sleep</span>} />
+							<FormControlLabel value="exercise" control={<Radio />} label={<span style={{fontSize: '1.7rem'}}>Exercise</span>} />
 				    </RadioGroup>
 			   </FormControl>
       </div>
@@ -76,7 +79,7 @@ ChallengeTypes.propTypes = {
 	create: PropTypes.any
 }
 
-const ChallengeSelection = withStyles(styles)(connect(mapStateToProps)(ChallengeTypes))
+const ChallengeSelection = withStyles(styles)(connect(mapStateToProps)(ChallengeTypes));
 
 class InputQuantity extends React.Component {
 
@@ -117,7 +120,7 @@ class InputQuantity extends React.Component {
 		          value={value}
 		          onChange={this.handleChange}
 		          InputProps={{
-		            endAdornment: <InputAdornment position="end">{type === 'pledge' ? "DCT" : ""}</InputAdornment>,
+								endAdornment: <InputAdornment position="end">{type === 'pledge' ? <span style={{fontSize: "1.5rem"}}>DCT</span> : ""}</InputAdornment>,
 		          }}
 		        />
 			</div>
@@ -131,28 +134,36 @@ InputQuantity.propTypes = {
 	create: PropTypes.any
 }
 
-const QuantityPicker = withStyles(styles)(connect(mapStateToProps)(InputQuantity))
+const QuantityPicker = withStyles(styles)(connect(mapStateToProps)(InputQuantity));
+
+function QuantityPickerLabel({ text }) {
+	return <span style={{fontSize: '1.7rem'}}>{text}</span>;
+}
 
 export default class CreateChallengeForm extends React.Component {
 	render() {
 		return (
-			<Grid container spacing={24}>
-			  <Grid item xs={12}>
-			    <ChallengeSelection />
+			<Fragment>
+				<Grid container spacing={12}>
+          <Grid item xs={12}>
+            <ChallengeSelection style={{width: "100%"}} />
+          </Grid>
 				</Grid>
-				<Grid item xs={12}>
-			    <QuantityPicker type='quantity' label='Quantity'/>
+			<Grid container spacing={12} style={{justifyContent: "space-evenly"}}>
+				<Grid item xl={6}>
+					<QuantityPicker type='quantity' label={<QuantityPickerLabel text="Quantity" />}/>
 				</Grid>
-				<Grid item xs={12}>
-			    <QuantityPicker type='duration' label='Duration'/>
+				<Grid item xl={6}>
+			    <QuantityPicker type='duration' label={<QuantityPickerLabel text="Duration" />}/>
 				</Grid>
-				<Grid item xs={12}>
-			    <QuantityPicker type='start_time' label='Start Time'/>
+				<Grid item xl={6}>
+			    <QuantityPicker type='start_time' label={<QuantityPickerLabel text="Start Time" />}/>
 				</Grid>
-				<Grid item xs={12}>
-			    <QuantityPicker type='pledge' label='Pledge Amount'/>
+				<Grid item xl={6}>
+			    <QuantityPicker type='pledge' label={<QuantityPickerLabel text="Pledge Amount" />}/>
 				</Grid>
 			</Grid>
+			</Fragment>
 		);
 	}
 }

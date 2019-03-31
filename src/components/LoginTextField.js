@@ -10,7 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 
-import { setUserInfo } from "../user_info/reducer";
+import { logIn, setUserInfo } from "../user_info/reducer";
 import { selectChallenges, selectUserInfo } from "../reduxStore/selectors";
 import { SERVER_ENDPOINT } from "../urlEndpoints";
 
@@ -72,6 +72,7 @@ class LoginTextField extends React.Component {
             const res = response.data;
             console.log(res);
             dispatch(setUserInfo(res));
+            dispatch(logIn())
         })
         .catch(function (error) {
             // handle error
@@ -105,7 +106,7 @@ class LoginTextField extends React.Component {
             style: {fontSize: 18},
             endAdornment: (
               <InputAdornment position="end">
-                <Fab size='medium' color="secondary" variant="fab" aria-label="login" type='button' onClick={this.handleSubmit}>
+                <Fab size='medium' color="secondary" variant="fab" aria-label="login" type='button' onClick={this.handleSubmit.bind(this)}>
                   <AccountCircle />
                 </Fab>
               </InputAdornment>
