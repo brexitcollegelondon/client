@@ -17,6 +17,7 @@ import { SERVER_ENDPOINT } from "../urlEndpoints";
 const styles = theme => ({
   cssFocused: {},
   cssLabel: {
+    fontSize: 16,
     '&$cssFocused': {
       color: "black",
       fontSize: 16
@@ -87,6 +88,7 @@ class LoginTextField extends React.Component {
         <form className={classes.container} noValidate autoComplete="off">
           <div>
           <TextField
+            style={{fontSize: '!important 10rem'}}
           className={classes.textField}
           value={this.state.login}
           id="input-with-icon-textfield"
@@ -100,6 +102,7 @@ class LoginTextField extends React.Component {
             },
           }}
           InputProps={{
+            style: {fontSize: 18},
             endAdornment: (
               <InputAdornment position="end">
                 <Fab size='medium' color="secondary" variant="fab" aria-label="login" type='button' onClick={this.handleSubmit}>

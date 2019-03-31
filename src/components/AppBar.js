@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,20 +22,14 @@ const styles = {
 
 function DecentLifeAppBar(props) {
   const { classes } = props;
-	let loginStatus;
-	if (true) {
-		loginStatus = <LoginTextField/>
-	} else {
-		loginStatus = <Avatar>T</Avatar>
-	}
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ paddingTop: '0.8rem', paddingBottom: '0.8rem' }}>
         <Toolbar>
           <Typography variant="h2" color="inherit" className={classes.grow}>
             Decent Life
           </Typography>
-					{loginStatus}
+          <LoginTextField/>
         </Toolbar>
       </AppBar>
     </div>
