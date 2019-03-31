@@ -20,6 +20,7 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import { selectChallenges, selectUserInfo } from "../reduxStore/selectors";
 import connect from "react-redux/es/connect/connect";
 import {setAllChallenges} from "../challenges/reducer";
+import { SERVER_ENDPOINT } from "../urlEndpoints";
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -62,7 +63,7 @@ class ChallengeTable extends React.Component {
   };
   getAllChallenges = () => {
       const {dispatch} = this.props;
-      axios.get('http://127.0.0.1:5000/challenges')
+      axios.get(`${SERVER_ENDPOINT}/challenges`)
           .then(function (response) {
               // list of challenge objects returned
               const res = response.data;
@@ -82,7 +83,7 @@ class ChallengeTable extends React.Component {
   };
   handleJoin = () => {
     const { user_info } = this.props;
-    axios.post('http://127.0.0.1:5000/join_challenge', {
+    axios.post(`${SERVER_ENDPOINT}/join_challenge`, {
         challenge_id: this.state.id,
         user_id: user_info.user_id,
         is_bystander: false,

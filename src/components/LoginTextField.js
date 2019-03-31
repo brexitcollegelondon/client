@@ -12,6 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import { setUserInfo } from "../user_info/reducer";
 import { selectChallenges, selectUserInfo } from "../reduxStore/selectors";
+import { SERVER_ENDPOINT } from "../urlEndpoints";
 
 const styles = theme => ({
   cssFocused: {},
@@ -64,7 +65,7 @@ class LoginTextField extends React.Component {
     console.log(this.state.login);
     const { dispatch } = this.props;
     const user_id = this.state.login;
-    axios.get(`http://127.0.0.1:5000/users/${user_id}`)
+    axios.get(`${SERVER_ENDPOINT}/users/${user_id}`)
         .then(function (response) {
             // user_info object returned
             const res = response.data;

@@ -15,6 +15,7 @@ import MyChallengeTable from "./MyChallengeTable";
 import { selectUserInfo, selectChallenges } from "../reduxStore/selectors";
 import { setAllChallenges } from "../challenges/reducer";
 import * as PropTypes from "prop-types";
+import { SERVER_ENDPOINT } from "../urlEndpoints";
 
 class App extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class App extends Component {
 
     getAllChallenges() {
         const {dispatch} = this.props;
-        axios.get('http://127.0.0.1:5000/challenges')
+        axios.get(`${SERVER_ENDPOINT}/challenges`)
             .then(function (response) {
                 // list of challenge objects returned
                 const res = response.data;

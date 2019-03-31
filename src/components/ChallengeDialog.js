@@ -17,6 +17,7 @@ import { selectCreate, selectUserInfo } from '../reduxStore/selectors';
 import CreateChallengeForm from './CreateChallengeForm'
 import {setAllChallenges} from "../challenges/reducer";
 import * as PropTypes from "prop-types";
+import { SERVER_ENDPOINT } from "../urlEndpoints";
 
 const DialogTitle = withStyles(theme => ({
   root: {
@@ -74,7 +75,7 @@ class ChallengeDialog extends React.Component {
 
   getAllChallenges = () => {
       const {dispatch} = this.props;
-      axios.get('http://127.0.0.1:5000/challenges')
+      axios.get(`${SERVER_ENDPOINT}/challenges`)
           .then(function (response) {
               // list of challenge objects returned
               const res = response.data;
@@ -89,7 +90,7 @@ class ChallengeDialog extends React.Component {
   handleCreate = () => {
     const { create, user_info } = this.props;
     // HARD CODE CHALLENGE:
-    axios.post('http://127.0.0.1:5000/challenge', {
+    axios.post(`${SERVER_ENDPOINT}/challenge`, {
         challenge_id: "1",
         creator_id: user_info.user_id,
         creator_bystander: false,
